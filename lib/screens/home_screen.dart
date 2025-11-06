@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'unit_converter_screen.dart';
 import 'currency_converter_screen.dart';
+import 'computer_unit_converter_screen.dart';
+import 'scientific_unit_converter_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = const [
     UnitConverterScreen(),
     CurrencyConverterScreen(),
+    ComputerUnitConverterScreen(),
+    ScientificUnitConverterScreen(),
   ];
 
   @override
@@ -28,6 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.straighten), label: 'Units'),
           BottomNavigationBarItem(icon: Icon(Icons.currency_exchange), label: 'Currency'),
+          BottomNavigationBarItem(icon: Icon(Icons.storage), label: 'Computer Science'),
+          BottomNavigationBarItem(icon: Icon(Icons.storage), label: 'Scientific'),
+
         ],
       ),
     );
