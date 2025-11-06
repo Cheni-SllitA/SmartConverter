@@ -24,17 +24,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Smart Converter')),
-      body: _screens[_selectedIndex],
+      appBar: AppBar(
+        title: const Text('Smart Converter'),
+        centerTitle: true,
+      ),
+      body: SafeArea(child: _screens[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.teal,
+        unselectedItemColor: Colors.grey,
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.straighten), label: 'Units'),
           BottomNavigationBarItem(icon: Icon(Icons.currency_exchange), label: 'Currency'),
-          BottomNavigationBarItem(icon: Icon(Icons.storage), label: 'Computer Science'),
-          BottomNavigationBarItem(icon: Icon(Icons.storage), label: 'Scientific'),
-
+          BottomNavigationBarItem(icon: Icon(Icons.computer), label: 'Computer'),
+          BottomNavigationBarItem(icon: Icon(Icons.science), label: 'Scientific'),
         ],
       ),
     );

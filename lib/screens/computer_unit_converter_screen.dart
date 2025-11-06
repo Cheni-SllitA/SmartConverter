@@ -7,40 +7,84 @@ class ComputerUnitConverterScreen extends StatefulWidget {
   const ComputerUnitConverterScreen({super.key});
 
   @override
-  State<ComputerUnitConverterScreen> createState() => _ComputerUnitConverterScreenState();
+  State<ComputerUnitConverterScreen> createState() =>
+      _ComputerUnitConverterScreenState();
 }
 
-class _ComputerUnitConverterScreenState extends State<ComputerUnitConverterScreen> {
+class _ComputerUnitConverterScreenState
+    extends State<ComputerUnitConverterScreen> {
   final TextEditingController _controller = TextEditingController();
-  String _category = 'Length';
-  String _fromUnit = 'Meters';
-  String _toUnit = 'Kilometers';
+  String _category = 'Data Storage';
+  String _fromUnit = 'Bits';
+  String _toUnit = 'Bytes';
   double? _result;
 
   final Map<String, List<String>> unitCategories = {
     // Technology related unit categories
-    'Data Storage': ['Bits', 'Bytes', 'Kilobytes', 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'],
-    'Network Speed': ['Bits per Second (bps)', 'Kilobits per Second (Kbps)', 'Megabits per Second (Mbps)', 'Gigabits per Second (Gbps)', 'Terabits per Second (Tbps)', 'Bytes per Second (Bps)', 'Megabytes per Second (MBps)'],
-    'Number System': ['Binary', 'Octal', 'Decimal', 'Hexadecimal', 'Duodecimal', 'Base-32', 'Base-64'],
+    'Data Storage': [
+      'Bits',
+      'Bytes',
+      'Kilobytes',
+      'Megabytes',
+      'Gigabytes',
+      'Terabytes',
+      'Petabytes',
+    ],
+    'Network Speed': [
+      'Bits per Second (bps)',
+      'Kilobits per Second (Kbps)',
+      'Megabits per Second (Mbps)',
+      'Gigabits per Second (Gbps)',
+      'Terabits per Second (Tbps)',
+      'Bytes per Second (Bps)',
+      'Megabytes per Second (MBps)',
+    ],
+    'Number System': [
+      'Binary',
+      'Octal',
+      'Decimal',
+      'Hexadecimal',
+      'Duodecimal',
+      'Base-32',
+      'Base-64',
+    ],
   };
+
+  String? _stringResult; // Add at top next to _result
 
   void _convert() {
     final input = double.tryParse(_controller.text) ?? 0;
     double convertedValue = 0;
+    String? stringResult;
 
     switch (_category) {
-      case 'Length':
-        convertedValue = ConversionService.convertLength(input, _fromUnit, _toUnit);
+      case 'Data Storage':
+        convertedValue = ConversionService.convertDataStorage(
+          input,
+          _fromUnit,
+          _toUnit,
+        );
         break;
-      case 'Weight':
-        convertedValue = ConversionService.convertWeight(input, _fromUnit, _toUnit);
+      case 'Network Speed':
+        convertedValue = ConversionService.convertNetworkSpeed(
+          input,
+          _fromUnit,
+          _toUnit,
+        );
         break;
-      case 'Temperature':
-        convertedValue = ConversionService.convertTemperature(input, _fromUnit, _toUnit);
+      case 'Number System':
+        stringResult = ConversionService.convertNumberSystem(
+          _controller.text,
+          _fromUnit,
+          _toUnit,
+        );
         break;
     }
 
-    setState(() => _result = convertedValue);
+    setState(() {
+      _result = (stringResult == null) ? convertedValue : null;
+      _stringResult = stringResult;
+    });
   }
 
   void _onCategoryChange(String newCategory) {

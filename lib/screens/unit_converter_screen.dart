@@ -28,33 +28,6 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
     'Speed': ['Meters/Second', 'Kilometers/Hour', 'Miles/Hour', 'Knots', 'Feet/Second', 'Mach'],
     'Fuel Consumption': ['Liters/100km', 'Miles/Gallon (US)', 'Miles/Gallon (UK)', 'Kilometers/Liter'],
     'Electrical Current': ['Amperes', 'Milliamperes', 'Microamperes', 'Kiloamperes'],
-
-    // // Technology related unit categories
-    // 'Data Storage': ['Bits', 'Bytes', 'Kilobytes', 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'],
-    // 'Network Speed': ['Bits per Second (bps)', 'Kilobits per Second (Kbps)', 'Megabits per Second (Mbps)', 'Gigabits per Second (Gbps)', 'Terabits per Second (Tbps)', 'Bytes per Second (Bps)', 'Megabytes per Second (MBps)'],
-    // 'Number System': ['Binary', 'Octal', 'Decimal', 'Hexadecimal', 'Duodecimal', 'Base-32', 'Base-64'],
-
-    // //Scientific unit categories
-    // 'Energy': ['Joules', 'Calories', 'Kilocalories', 'Kilowatt-hours', 'BTU', 'Electronvolts'],
-    // 'Power': ['Watts', 'Kilowatts', 'Megawatts', 'Horsepower', 'BTU/Hour'],
-    // 'Frequency': ['Hertz', 'Kilohertz', 'Megahertz', 'Gigahertz', 'Terahertz'],
-    // 'Angle': ['Degrees', 'Radians', 'Gradians', 'Turns', 'Arcminutes', 'Arcseconds'],
-    // 'Force': ['Newtons', 'Pounds-force', 'Kilograms-force', 'Dynes', 'Kilonewtons'],
-    // 'Illuminance': ['Lux', 'Foot-candles', 'Phot', 'Nits'],
-    // 'Sound Level': ['Decibels', 'Phons', 'Sones', 'Nepers'],
-    // 'Torque': ['Newton-meters', 'Pound-feet', 'Kilogram-meters', 'Dyne-centimeters'],
-    // 'Luminance': ['Candela/Square Meter', 'Foot-lamberts', 'Nits'],
-    // 'Density': ['Kilograms/Cubic Meter', 'Grams/Cubic Centimeter', 'Pounds/Cubic Foot'],
-    // 'Voltage': ['Volts', 'Millivolts', 'Kilovolts'],
-    // 'Resistance': ['Ohms', 'Kiloohms', 'Megaohms'],
-    // 'Capacitance': ['Farads', 'Microfarads', 'Nanofarads', 'Picofarads'],
-    // 'Inductance': ['Henrys', 'Millihenrys', 'Microhenrys'],
-    // 'Magnetic Flux': ['Weber', 'Maxwell'],
-    // 'Magnetic Field Strength': ['Tesla', 'Gauss'],
-    // 'Radiation Dose': ['Gray', 'Sievert', 'Rad', 'Rem'],
-    // 'Radioactivity': ['Becquerel', 'Curie'],
-    // 'Luminous Flux': ['Lumens', 'Candela', 'Foot-lamberts'],
-    // 'Acceleration': ['Meters/Second²', 'Feet/Second²', 'G-force']
   };
 
   void _convert() {
@@ -70,6 +43,29 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
         break;
       case 'Temperature':
         convertedValue = ConversionService.convertTemperature(input, _fromUnit, _toUnit);
+        break;
+      
+      case 'Area':
+        convertedValue = ConversionService.convertArea(input, _fromUnit, _toUnit);
+        break;
+      case 'Volume':
+        convertedValue = ConversionService.convertVolume(input, _fromUnit, _toUnit);
+        break;
+      case 'Pressure':
+        convertedValue = ConversionService.convertPressure(input, _fromUnit, _toUnit);
+        break;
+      case 'Time':
+        convertedValue = ConversionService.convertTime(input, _fromUnit, _toUnit);
+        break;
+      
+      case 'Speed':
+        convertedValue = ConversionService.convertSpeed(input, _fromUnit, _toUnit);
+        break;
+      case 'Fuel Consumption':
+        convertedValue = ConversionService.convertFuelConsumption(input, _fromUnit, _toUnit);
+        break;
+      case 'Electrical Current':
+        convertedValue = ConversionService.convertElectricalCurrent(input, _fromUnit, _toUnit);
         break;
     }
 

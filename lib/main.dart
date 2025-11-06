@@ -1,7 +1,5 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
-import 'utils/theme.dart';
 
 void main() {
   runApp(const SmartConverterApp());
@@ -13,9 +11,13 @@ class SmartConverterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Smart Converter',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      title: 'Smart Converter',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        scaffoldBackgroundColor: Colors.white,
+      ),
       home: const HomeScreen(),
     );
   }
