@@ -369,10 +369,10 @@ static double convertElectricalCurrent(double value, String from, String to) {
 
   static double convertTorque(double value, String from, String to) {
     const rates = {
-      'Newton-meters': 1.0,
-      'Pound-feet': 1.35582,
+      'Nm': 1.0,
+      'Lb-ft': 1.35582,
       'Kilogram-meters': 9.80665,
-      'Dyne-centimeters': 1e-7,
+      'dyncm': 1e-7,
     };
     return value * (rates[to]! / rates[from]!);
   }
@@ -455,8 +455,8 @@ static double convertElectricalCurrent(double value, String from, String to) {
 
   static double convertAcceleration(double value, String from, String to) {
     const rates = {
-      'Meters/Second²': 1.0,
-      'Feet/Second²': 0.3048,
+      'm/s²': 1.0,
+      'ft/s²': 0.3048,
       'G-force': 9.80665,
     };
     return value * (rates[to]! / rates[from]!);

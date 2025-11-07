@@ -12,9 +12,9 @@ class ScientificUnitConverterScreen extends StatefulWidget {
 
 class _ScientificUnitConverterScreenState extends State<ScientificUnitConverterScreen> {
   final TextEditingController _controller = TextEditingController();
-  String _category = 'Length';
-  String _fromUnit = 'Meters';
-  String _toUnit = 'Kilometers';
+  String _category = 'Energy';
+  String _fromUnit = 'Joules';
+  String _toUnit = 'Calories';
   double? _result;
 
   final Map<String, List<String>> unitCategories = {
@@ -26,9 +26,9 @@ class _ScientificUnitConverterScreenState extends State<ScientificUnitConverterS
     'Force': ['Newtons', 'Pounds-force', 'Kilograms-force', 'Dynes', 'Kilonewtons'],
     'Illuminance': ['Lux', 'Foot-candles', 'Phot', 'Nits'],
     'Sound Level': ['Decibels', 'Phons', 'Sones', 'Nepers'],
-    'Torque': ['Newton-meters', 'Pound-feet', 'Kilogram-meters', 'Dyne-centimeters'],
-    'Luminance': ['Candela/Square Meter', 'Foot-lamberts', 'Nits'],
-    'Density': ['Kilograms/Cubic Meter', 'Grams/Cubic Centimeter', 'Pounds/Cubic Foot'],
+    'Torque': ['Nm', 'Lb-ft', 'Kilogram-meters', 'dyncm'],
+    'Luminance': ['Candela/m³', 'Foot-lamberts', 'Nits'],
+    'Density': ['kg/m³', 'G/cc', 'lb/ft³'],
     'Voltage': ['Volts', 'Millivolts', 'Kilovolts'],
     'Resistance': ['Ohms', 'Kiloohms', 'Megaohms'],
     'Capacitance': ['Farads', 'Microfarads', 'Nanofarads', 'Picofarads'],
@@ -38,7 +38,7 @@ class _ScientificUnitConverterScreenState extends State<ScientificUnitConverterS
     'Radiation Dose': ['Gray', 'Sievert', 'Rad', 'Rem'],
     'Radioactivity': ['Becquerel', 'Curie'],
     'Luminous Flux': ['Lumens', 'Candela', 'Foot-lamberts'],
-    'Acceleration': ['Meters/Second²', 'Feet/Second²', 'G-force']
+    'Acceleration': ['m/s²', 'ft/s²', 'G-force']
   };
 
   void _convert() {
@@ -46,14 +46,68 @@ class _ScientificUnitConverterScreenState extends State<ScientificUnitConverterS
     double convertedValue = 0;
 
     switch (_category) {
-      case 'Length':
-        convertedValue = ConversionService.convertLength(input, _fromUnit, _toUnit);
+      case 'Energy':
+        convertedValue = ConversionService.convertEnergy(input, _fromUnit, _toUnit);  
         break;
-      case 'Weight':
-        convertedValue = ConversionService.convertWeight(input, _fromUnit, _toUnit);
+      case 'Power':
+        convertedValue = ConversionService.convertPower(input, _fromUnit, _toUnit);  
         break;
-      case 'Temperature':
-        convertedValue = ConversionService.convertTemperature(input, _fromUnit, _toUnit);
+      case 'Frequency':
+        convertedValue = ConversionService.convertFrequency(input, _fromUnit, _toUnit);
+        break;
+      case 'Angle':
+        convertedValue = ConversionService.convertAngle(input, _fromUnit, _toUnit);
+        break;
+      case 'Force':
+        convertedValue = ConversionService.convertForce(input, _fromUnit, _toUnit);
+        break;
+      case 'Illuminance':
+        convertedValue = ConversionService.convertIlluminance(input, _fromUnit, _toUnit);
+        break;
+      case 'Sound Level':
+        convertedValue = ConversionService.convertSoundLevel(input, _fromUnit, _toUnit);
+        break;
+      case 'Torque':
+        convertedValue = ConversionService.convertTorque(input, _fromUnit, _toUnit);
+        break;
+      case 'Luminance':
+        convertedValue = ConversionService.convertLuminance(input, _fromUnit, _toUnit);
+        break;
+      case 'Density':
+        convertedValue = ConversionService.convertDensity(input, _fromUnit, _toUnit);
+        break;
+      case 'Voltage':
+        convertedValue = ConversionService.convertVoltage(input, _fromUnit, _toUnit);
+        break;
+      case 'Resistance':
+        convertedValue = ConversionService.convertResistance(input, _fromUnit, _toUnit);
+        break;
+      case 'Capacitance':
+        convertedValue = ConversionService.convertCapacitance(input, _fromUnit, _toUnit);
+        break;
+      case 'Inductance':
+        convertedValue = ConversionService.convertInductance(input, _fromUnit, _toUnit);
+        break;
+      case 'Magnetic Flux':
+        convertedValue = ConversionService.convertMagneticFlux(input, _fromUnit, _toUnit);
+        break;
+      case 'Magnetic Field Strength':
+        convertedValue = ConversionService.convertMagneticFieldStrength(input, _fromUnit, _toUnit);
+        break;
+      case 'Radiation Dose':
+        convertedValue = ConversionService.convertRadiationDose(input, _fromUnit, _toUnit);
+        break;
+      case 'Radioactivity':
+        convertedValue = ConversionService.convertRadioactivity(input, _fromUnit, _toUnit);
+        break;
+      case 'Luminous Flux':
+        convertedValue = ConversionService.convertLuminousFlux(input, _fromUnit, _toUnit);
+        break;
+      case 'Acceleration':
+        convertedValue = ConversionService.convertAcceleration(input, _fromUnit, _toUnit);
+        break;
+      default:
+        convertedValue = input;
         break;
     }
 
@@ -127,3 +181,4 @@ class _ScientificUnitConverterScreenState extends State<ScientificUnitConverterS
     );
   }
 }
+
