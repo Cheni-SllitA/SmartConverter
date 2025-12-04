@@ -49,10 +49,16 @@ class _ComputerUnitConverterScreenState
     ],
   };
 
+  // Category icons for better visual identification
+  final Map<String, IconData> categoryIcons = {
+    'Data Storage': Icons.storage_rounded,
+    'Network Speed': Icons.network_check_rounded,
+    'Number System': Icons.tag_rounded,
+  };
+
   @override
   void initState() {
     super.initState();
-    // Auto-convert on input change for instant feedback
     _controller.addListener(_onInputChange);
   }
 
@@ -82,16 +88,14 @@ class _ComputerUnitConverterScreenState
     if (inputText.isEmpty) return;
 
     if (_category == 'Number System') {
-      // Direct conversion for number systems (no isolate needed)
-      final stringResult =
+      final converted =
           ConversionService.convertNumberSystem(inputText, _fromUnit, _toUnit);
       setState(() {
-        _stringResult = stringResult;
+        _stringResult = converted;
         _result = null;
         _showResult = true;
       });
     } else {
-      // Direct conversion for numeric values (isolates cause lag here)
       final input = double.tryParse(inputText);
       if (input == null) return;
 
@@ -152,7 +156,7 @@ class _ComputerUnitConverterScreenState
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                // Modern header with icon
+                // Modern header
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -162,17 +166,17 @@ class _ComputerUnitConverterScreenState
                         color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Icon(
-                        Icons.calculate_rounded,
+                      child: Icon(
+                        categoryIcons[_category],
                         color: Colors.white,
                         size: 32,
                       ),
                     ),
                     const SizedBox(width: 16),
                     const Text(
-                      'Unit Converter',
+                      'Computer Converter',
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 25,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
@@ -182,7 +186,7 @@ class _ComputerUnitConverterScreenState
                 ),
                 const SizedBox(height: 32),
 
-                // Main Card Container
+                // Main Card
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
@@ -194,7 +198,7 @@ class _ComputerUnitConverterScreenState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Category selector with chips
+                        // Category selector with visual grid
                         Text(
                           'Category',
                           style: theme.textTheme.titleMedium?.copyWith(
@@ -203,38 +207,38 @@ class _ComputerUnitConverterScreenState
                           ),
                         ),
                         const SizedBox(height: 12),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: unitCategories.keys.map((category) {
-                            final isSelected = category == _category;
-                            return FilterChip(
-                              selected: isSelected,
-                              label: Text(category),
-                              onSelected: (_) => _onCategoryChange(category),
-                              backgroundColor: Colors.grey[100],
-                              selectedColor: colorScheme.primaryContainer,
-                              labelStyle: TextStyle(
-                                color: isSelected
-                                    ? colorScheme.onPrimaryContainer
-                                    : Colors.grey[700],
-                                fontWeight: isSelected
-                                    ? FontWeight.w600
-                                    : FontWeight.normal,
-                              ),
-                              checkmarkColor: colorScheme.onPrimaryContainer,
-                            );
-                          }).toList(),
+
+                        // Category grid for better UX
+                        SizedBox(
+                          height: 120,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: unitCategories.keys.length,
+                            itemBuilder: (context, index) {
+                              final category =
+                                  unitCategories.keys.elementAt(index);
+                              final isSelected = category == _category;
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 12),
+                                child: _buildCategoryCard(
+                                  category,
+                                  isSelected,
+                                  colorScheme,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                         const SizedBox(height: 24),
 
-                        // Input field with modern styling
+                        // Input field
                         TextField(
                           controller: _controller,
                           keyboardType: _category == 'Number System'
                               ? TextInputType.text
                               : const TextInputType.numberWithOptions(
-                                  decimal: true),
+                                  decimal: true,
+                                ),
                           style: const TextStyle(fontSize: 18),
                           decoration: InputDecoration(
                             labelText: 'Enter value',
@@ -304,7 +308,7 @@ class _ComputerUnitConverterScreenState
                             });
                           },
                         ),
-                        
+
                         // Result with smooth animation
                         AnimatedSize(
                           duration: const Duration(milliseconds: 300),
@@ -337,7 +341,8 @@ class _ComputerUnitConverterScreenState
                                               const SizedBox(width: 8),
                                               Text(
                                                 'Result',
-                                                style: theme.textTheme.titleSmall
+                                                style: theme
+                                                    .textTheme.titleSmall
                                                     ?.copyWith(
                                                   color: colorScheme.primary,
                                                   fontWeight: FontWeight.w600,
@@ -349,9 +354,11 @@ class _ComputerUnitConverterScreenState
                                           Text(
                                             _stringResult ??
                                                 _formatNumber(_result!),
-                                            style: theme.textTheme.headlineMedium
+                                            style: theme
+                                                .textTheme.headlineMedium
                                                 ?.copyWith(
-                                              color: colorScheme.onPrimaryContainer,
+                                              color: colorScheme
+                                                  .onPrimaryContainer,
                                               fontWeight: FontWeight.bold,
                                             ),
                                             textAlign: TextAlign.center,
@@ -361,7 +368,8 @@ class _ComputerUnitConverterScreenState
                                             _toUnit,
                                             style: theme.textTheme.bodyLarge
                                                 ?.copyWith(
-                                              color: colorScheme.onPrimaryContainer
+                                              color: colorScheme
+                                                  .onPrimaryContainer
                                                   .withOpacity(0.7),
                                             ),
                                           ),
@@ -379,6 +387,63 @@ class _ComputerUnitConverterScreenState
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryCard(
+    String category,
+    bool isSelected,
+    ColorScheme colorScheme,
+  ) {
+    return GestureDetector(
+      onTap: () => _onCategoryChange(category),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: 140,
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? LinearGradient(
+                  colors: [
+                    colorScheme.primary,
+                    colorScheme.secondary,
+                  ],
+                )
+              : null,
+          color: isSelected ? null : colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isSelected
+                ? colorScheme.primary
+                : colorScheme.outline.withOpacity(0.3),
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              categoryIcons[category],
+              color: isSelected ? Colors.white : colorScheme.onSurface,
+              size: 32,
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                category,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  color: isSelected ? Colors.white : colorScheme.onSurface,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -447,7 +512,8 @@ class _ComputerUnitConverterScreenState
     } else if (value.abs() < 0.0001 && value != 0) {
       return value.toStringAsExponential(4);
     } else {
-      return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 6)
+      return value
+          .toStringAsFixed(value.truncateToDouble() == value ? 0 : 6)
           .replaceAll(RegExp(r'\.?0+$'), '');
     }
   }

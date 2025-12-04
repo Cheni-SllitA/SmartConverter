@@ -29,7 +29,6 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
     'Electrical Current': ['Amperes', 'Milliamperes', 'Microamperes', 'Kiloamperes'],
   };
 
-  // Category icons for better visual identification
   final Map<String, IconData> categoryIcons = {
     'Length': Icons.straighten_rounded,
     'Weight': Icons.scale_rounded,
@@ -73,7 +72,6 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
     final input = double.tryParse(_controller.text);
     if (input == null) return;
 
-    // Direct conversion (no isolate needed)
     final convertedValue = _performConversion(
       _category,
       input,
@@ -183,7 +181,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                     const Text(
                       'Unit Converter',
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 25,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
@@ -205,7 +203,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Category selector with chips
+                        // Category selector
                         Text(
                           'Category',
                           style: theme.textTheme.titleMedium?.copyWith(
@@ -214,41 +212,24 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: unitCategories.keys.map((category) {
-                            final isSelected = category == _category;
-                            return FilterChip(
-                              selected: isSelected,
-                              label: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    categoryIcons[category],
-                                    size: 16,
-                                    color: isSelected
-                                        ? colorScheme.onPrimaryContainer
-                                        : Colors.grey[700],
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Text(category),
-                                ],
-                              ),
-                              onSelected: (_) => _onCategoryChange(category),
-                              backgroundColor: Colors.grey[100],
-                              selectedColor: colorScheme.primaryContainer,
-                              labelStyle: TextStyle(
-                                color: isSelected
-                                    ? colorScheme.onPrimaryContainer
-                                    : Colors.grey[700],
-                                fontWeight: isSelected
-                                    ? FontWeight.w600
-                                    : FontWeight.normal,
-                              ),
-                              checkmarkColor: colorScheme.onPrimaryContainer,
-                            );
-                          }).toList(),
+                        SizedBox(
+                          height: 120,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: unitCategories.keys.length,
+                            itemBuilder: (context, index) {
+                              final category = unitCategories.keys.elementAt(index);
+                              final isSelected = category == _category;
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 12),
+                                child: _buildCategoryCard(
+                                  category,
+                                  isSelected,
+                                  colorScheme,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                         const SizedBox(height: 24),
 
@@ -325,7 +306,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                           },
                         ),
 
-                        // Result with smooth animation
+                        // Result
                         AnimatedSize(
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
@@ -403,11 +384,65 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
     );
   }
 
+  Widget _buildCategoryCard(
+    String category,
+    bool isSelected,
+    ColorScheme colorScheme,
+  ) {
+    return GestureDetector(
+      onTap: () => _onCategoryChange(category),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: 100,
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? LinearGradient(
+                  colors: [colorScheme.primary, colorScheme.secondary],
+                )
+              : null,
+          color: isSelected ? null : colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isSelected
+                ? colorScheme.primary
+                : colorScheme.outline.withOpacity(0.3),
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              categoryIcons[category],
+              color: isSelected ? Colors.white : colorScheme.onSurface,
+              size: 32,
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                category,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  color: isSelected ? Colors.white : colorScheme.onSurface,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildUnitSelector(
     String label,
-    String value,
+    String currentUnit,
     IconData icon,
-    Function(String?) onChanged,
+    void Function(String?) onChanged,
   ) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -415,46 +450,48 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 8),
-          child: Row(
-            children: [
-              Icon(icon, size: 18, color: colorScheme.primary),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.primary,
-                ),
+        Row(
+          children: [
+            Icon(icon, size: 18, color: colorScheme.primary),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: colorScheme.primary,
               ),
-            ],
-          ),
-        ),
-        DropdownButtonFormField<String>(
-          value: value,
-          isExpanded: true,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: colorScheme.surfaceContainerHighest,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none,
             ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: colorScheme.outline.withOpacity(0.3),
+            ),
           ),
-          items: unitCategories[_category]!
-              .map((u) => DropdownMenuItem(
-                    value: u,
-                    child: Text(
-                      u,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                  ))
-              .toList(),
-          onChanged: onChanged,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: currentUnit,
+              isExpanded: true,
+              icon: Icon(Icons.arrow_drop_down, color: colorScheme.primary),
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: colorScheme.onSurface,
+              ),
+              dropdownColor: colorScheme.surface,
+              borderRadius: BorderRadius.circular(16),
+              items: unitCategories[_category]!.map((String unit) {
+                return DropdownMenuItem<String>(
+                  value: unit,
+                  child: Text(unit),
+                );
+              }).toList(),
+              onChanged: onChanged,
+            ),
+          ),
         ),
       ],
     );
@@ -466,7 +503,8 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
     } else if (value.abs() < 0.0001 && value != 0) {
       return value.toStringAsExponential(4);
     } else {
-      return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 6)
+      return value
+          .toStringAsFixed(value.truncateToDouble() == value ? 0 : 6)
           .replaceAll(RegExp(r'\.?0+$'), '');
     }
   }

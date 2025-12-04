@@ -25,12 +25,25 @@ class _ScientificUnitConverterScreenState
       'Kilocalories',
       'Kilowatt-hours',
       'BTU',
-      'Electronvolts'
+      'Electronvolts',
     ],
     'Power': ['Watts', 'Kilowatts', 'Megawatts', 'Horsepower', 'BTU/Hour'],
     'Frequency': ['Hertz', 'Kilohertz', 'Megahertz', 'Gigahertz', 'Terahertz'],
-    'Angle': ['Degrees', 'Radians', 'Gradians', 'Turns', 'Arcminutes', 'Arcseconds'],
-    'Force': ['Newtons', 'Pounds-force', 'Kilograms-force', 'Dynes', 'Kilonewtons'],
+    'Angle': [
+      'Degrees',
+      'Radians',
+      'Gradians',
+      'Turns',
+      'Arcminutes',
+      'Arcseconds',
+    ],
+    'Force': [
+      'Newtons',
+      'Pounds-force',
+      'Kilograms-force',
+      'Dynes',
+      'Kilonewtons',
+    ],
     'Illuminance': ['Lux', 'Foot-candles', 'Phot', 'Nits'],
     'Sound Level': ['Decibels', 'Phons', 'Sones', 'Nepers'],
     'Torque': ['Nm', 'Lb-ft', 'Kilogram-meters', 'dyncm'],
@@ -198,10 +211,7 @@ class _ScientificUnitConverterScreenState
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            colorScheme.primary,
-            colorScheme.secondary,
-          ],
+          colors: [colorScheme.primary, colorScheme.secondary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -263,7 +273,7 @@ class _ScientificUnitConverterScreenState
                           ),
                         ),
                         const SizedBox(height: 12),
-                        
+
                         // Category grid for better UX
                         SizedBox(
                           height: 120,
@@ -271,7 +281,9 @@ class _ScientificUnitConverterScreenState
                             scrollDirection: Axis.horizontal,
                             itemCount: unitCategories.keys.length,
                             itemBuilder: (context, index) {
-                              final category = unitCategories.keys.elementAt(index);
+                              final category = unitCategories.keys.elementAt(
+                                index,
+                              );
                               final isSelected = category == _category;
                               return Padding(
                                 padding: const EdgeInsets.only(right: 12),
@@ -391,22 +403,29 @@ class _ScientificUnitConverterScreenState
                                               const SizedBox(width: 8),
                                               Text(
                                                 'Result',
-                                                style: theme.textTheme.titleSmall
+                                                style: theme
+                                                    .textTheme
+                                                    .titleSmall
                                                     ?.copyWith(
-                                                  color: colorScheme.primary,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                                      color:
+                                                          colorScheme.primary,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
                                               ),
                                             ],
                                           ),
                                           const SizedBox(height: 12),
                                           Text(
                                             _formatNumber(_result!),
-                                            style: theme.textTheme.headlineMedium
+                                            style: theme
+                                                .textTheme
+                                                .headlineMedium
                                                 ?.copyWith(
-                                              color: colorScheme.onPrimaryContainer,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                                  color: colorScheme
+                                                      .onPrimaryContainer,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                             textAlign: TextAlign.center,
                                           ),
                                           const SizedBox(height: 4),
@@ -414,9 +433,10 @@ class _ScientificUnitConverterScreenState
                                             _toUnit,
                                             style: theme.textTheme.bodyLarge
                                                 ?.copyWith(
-                                              color: colorScheme.onPrimaryContainer
-                                                  .withOpacity(0.7),
-                                            ),
+                                                  color: colorScheme
+                                                      .onPrimaryContainer
+                                                      .withOpacity(0.7),
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -450,10 +470,7 @@ class _ScientificUnitConverterScreenState
         decoration: BoxDecoration(
           gradient: isSelected
               ? LinearGradient(
-                  colors: [
-                    colorScheme.primary,
-                    colorScheme.secondary,
-                  ],
+                  colors: [colorScheme.primary, colorScheme.secondary],
                 )
               : null,
           color: isSelected ? null : colorScheme.surfaceContainerHighest,
@@ -470,9 +487,7 @@ class _ScientificUnitConverterScreenState
           children: [
             Icon(
               categoryIcons[category],
-              color: isSelected
-                  ? Colors.white
-                  : colorScheme.onSurface,
+              color: isSelected ? Colors.white : colorScheme.onSurface,
               size: 32,
             ),
             const SizedBox(height: 8),
@@ -483,9 +498,7 @@ class _ScientificUnitConverterScreenState
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                  color: isSelected
-                      ? Colors.white
-                      : colorScheme.onSurface,
+                  color: isSelected ? Colors.white : colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -536,18 +549,22 @@ class _ScientificUnitConverterScreenState
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide.none,
             ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
           ),
           items: unitCategories[_category]!
-              .map((u) => DropdownMenuItem(
-                    value: u,
-                    child: Text(
-                      u,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                  ))
+              .map(
+                (u) => DropdownMenuItem(
+                  value: u,
+                  child: Text(
+                    u,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                ),
+              )
               .toList(),
           onChanged: onChanged,
         ),
@@ -561,7 +578,8 @@ class _ScientificUnitConverterScreenState
     } else if (value.abs() < 0.0001 && value != 0) {
       return value.toStringAsExponential(4);
     } else {
-      return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 6)
+      return value
+          .toStringAsFixed(value.truncateToDouble() == value ? 0 : 6)
           .replaceAll(RegExp(r'\.?0+$'), '');
     }
   }
