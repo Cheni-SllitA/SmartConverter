@@ -2,32 +2,42 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class CurrencyService {
-  static const String _baseUrl = 'https://api.exchangerate.host';
+  static const String _baseUrl = 'https://api.exchangerate-api.com/v4/latest';
 
   /// Fetches conversion rate between two currencies.
   static Future<double?> getExchangeRate(String from, String to) async {
-    final url = Uri.parse('$_baseUrl/convert?from=$from&to=$to');
-    final response = await http.get(url);
+    try {
+      final url = Uri.parse('$_baseUrl/$from'); // e.g., https://api.exchangerate-api.com/v4/latest/USD
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return (data['result'] as num?)?.toDouble();
-    } else {
-      throw Exception('Failed to load exchange rate');
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        final rates = data['rates'] as Map<String, dynamic>;
+        return (rates[to] as num?)?.toDouble();
+      } else {
+        throw Exception('Failed to load exchange rate: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw('Error fetching exchange rate: $e');
+
     }
   }
 
-  /// Optional: Get all available currency symbols.
+  /// Fetches all available currency codes.
   static Future<List<String>> getAvailableCurrencies() async {
-    final url = Uri.parse('$_baseUrl/symbols');
-    final response = await http.get(url);
+    try {
+      final url = Uri.parse('$_baseUrl/USD'); // base with default USD
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final symbols = data['symbols'] as Map<String, dynamic>;
-      return symbols.keys.toList();
-    } else {
-      throw Exception('Failed to load currency list');
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        final rates = data['rates'] as Map<String, dynamic>;
+        return rates.keys.toList();
+      } else {
+        throw Exception('Failed to load currency list: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw('Error fetching currency list: $e');
     }
   }
 }

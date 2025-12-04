@@ -8,6 +8,8 @@ class ConversionService {
       'Centimeters': 100.0,
       'Miles': 0.000621371,
       'Feet': 3.28084,
+      'Milimeters' : 1000,
+
     };
 
     return value / rates[from]! * rates[to]!;
@@ -271,18 +273,18 @@ static double convertElectricalCurrent(double value, String from, String to) {
   }
 
   // Helper method to convert decimal to any base (up to 64)
-  static String _toBase(int number, int base) {
-    const chars =
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';
-    if (number == 0) return '0';
-    String result = '';
-    int n = number;
-    while (n > 0) {
-      result = chars[n % base] + result;
-      n ~/= base;
-    }
-    return result;
-  }
+  // static String _toBase(int number, int base) {
+  //   const chars =
+  //       '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';
+  //   if (number == 0) return '0';
+  //   String result = '';
+  //   int n = number;
+  //   while (n > 0) {
+  //     result = chars[n % base] + result;
+  //     n ~/= base;
+  //   }
+  //   return result;
+  // }
 
 
 //_________________________________________________________________________________________________________________________
