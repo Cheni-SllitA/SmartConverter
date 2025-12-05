@@ -540,7 +540,7 @@ class _ScientificUnitConverterScreenState
           ),
         ),
         DropdownButtonFormField<String>(
-          value: value,
+          initialValue: value,
           isExpanded: true,
           decoration: InputDecoration(
             filled: true,

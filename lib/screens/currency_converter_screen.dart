@@ -557,7 +557,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
           ),
         ),
         DropdownButtonFormField<String>(
-          value: value,
+          initialValue: value,
           isExpanded: true,
           decoration: InputDecoration(
             filled: true,

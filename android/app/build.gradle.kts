@@ -1,12 +1,12 @@
 plugins {
-    id("com.android.application")
+    id("com.wgcn.smart_converter")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
-    namespace = "com.example.smart_converter"
+    namespace = "com.wgcn.smart_converter"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

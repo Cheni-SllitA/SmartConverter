@@ -478,7 +478,7 @@ class _ComputerUnitConverterScreenState
           ),
         ),
         DropdownButtonFormField<String>(
-          value: value,
+          initialValue: value,
           isExpanded: true,
           decoration: InputDecoration(
             filled: true,

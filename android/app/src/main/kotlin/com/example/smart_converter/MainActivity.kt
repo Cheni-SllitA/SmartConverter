@@ -1,4 +1,4 @@
-package com.example.smart_converter
+package com.wgcn.smart_converter
 
 import io.flutter.embedding.android.FlutterActivity
 
