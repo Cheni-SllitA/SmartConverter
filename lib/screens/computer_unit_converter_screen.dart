@@ -163,7 +163,7 @@ class _ComputerUnitConverterScreenState
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Icon(
@@ -370,7 +370,7 @@ class _ComputerUnitConverterScreenState
                                                 ?.copyWith(
                                               color: colorScheme
                                                   .onPrimaryContainer
-                                                  .withOpacity(0.7),
+                                                  .withValues(alpha: 0.7),
                                             ),
                                           ),
                                         ],
@@ -416,7 +416,7 @@ class _ComputerUnitConverterScreenState
           border: Border.all(
             color: isSelected
                 ? colorScheme.primary
-                : colorScheme.outline.withOpacity(0.3),
+                : colorScheme.outline.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
         ),

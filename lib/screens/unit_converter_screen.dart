@@ -168,7 +168,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Icon(
@@ -362,7 +362,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                                             style: theme.textTheme.bodyLarge
                                                 ?.copyWith(
                                               color: colorScheme.onPrimaryContainer
-                                                  .withOpacity(0.7),
+                                                  .withValues(alpha: 0.7),
                                             ),
                                           ),
                                         ],
@@ -405,7 +405,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
           border: Border.all(
             color: isSelected
                 ? colorScheme.primary
-                : colorScheme.outline.withOpacity(0.3),
+                : colorScheme.outline.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -470,7 +470,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
             color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: colorScheme.outline.withOpacity(0.3),
+              color: colorScheme.outline.withValues(alpha: 0.3),
             ),
           ),
           child: DropdownButtonHideUnderline(

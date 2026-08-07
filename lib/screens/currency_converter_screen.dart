@@ -167,7 +167,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Icon(
@@ -373,7 +373,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
                                           color: colorScheme.primary
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                           width: 1,
                                         ),
                                       ),
@@ -411,7 +411,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                                                   ),
                                                   decoration: BoxDecoration(
                                                     color: colorScheme.surface
-                                                        .withOpacity(0.5),
+                                                        .withValues(alpha: 0.5),
                                                     borderRadius:
                                                         BorderRadius.circular(8),
                                                   ),
@@ -422,7 +422,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                                                         ?.copyWith(
                                                       color: colorScheme
                                                           .onSurface
-                                                          .withOpacity(0.6),
+                                                          .withValues(alpha: 0.6),
                                                     ),
                                                   ),
                                                 ),
@@ -447,7 +447,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                                                           ?.copyWith(
                                                         color: colorScheme
                                                             .onPrimaryContainer
-                                                            .withOpacity(0.7),
+                                                            .withValues(alpha: 0.7),
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
@@ -478,7 +478,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                                             const SizedBox(height: 16),
                                             Divider(
                                               color: colorScheme.onPrimaryContainer
-                                                  .withOpacity(0.2),
+                                                  .withValues(alpha: 0.2),
                                             ),
                                             const SizedBox(height: 12),
                                             Row(
@@ -490,7 +490,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                                                   size: 16,
                                                   color: colorScheme
                                                       .onPrimaryContainer
-                                                      .withOpacity(0.6),
+                                                      .withValues(alpha: 0.6),
                                                 ),
                                                 const SizedBox(width: 8),
                                                 Flexible(
@@ -501,7 +501,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                                                         ?.copyWith(
                                                       color: colorScheme
                                                           .onPrimaryContainer
-                                                          .withOpacity(0.7),
+                                                          .withValues(alpha: 0.7),
                                                       fontWeight: FontWeight.w500,
                                                     ),
                                                   ),
